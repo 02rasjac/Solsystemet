@@ -8,10 +8,10 @@ orbRadius = [57.9,      108.2,   146.6,   227.9,  778.6,     1433.5,   2872.5,  
 orbTime   = [88,        224.7,   365.2,   687,    4331,      10747,    30589,    59800,     90560]; % Jorddagar
 
 %* Maps för planeter
-Masses = containers.Map(planets, masses);
-Radius = containers.Map(planets, radius);
-OrbRadius = containers.Map(planets, orbRadius);
-OrbTimes = containers.Map(planets, orbTime);
+P_Masses = containers.Map(planets, masses);
+P_Radius = containers.Map(planets, radius);
+P_OrbRadius = containers.Map(planets, orbRadius);
+P_OrbTimes = containers.Map(planets, orbTime);
 clear masses radius orbRadius orbTime;
 
 %* månar
@@ -22,8 +22,8 @@ orbRadius = [384400, 9376, 1070400, 1221870, 435910, 354800, 19571]; %(km)
 orbTime = [27.3216, 0.3189, 7.1545, 15.945, 8.7062, 5.877, 6.3872]; %(dygn)
 
 %* Maps för månar
-Masses = containers.Map(moons,masses);
-Radius = containers.Map(moons,radius);
-OrbRadius = containers.Map(moons,orbRadius);
-OrbTimes = containers.Map(moons,orbTime);
+M_Masses = containers.Map(moons,masses);
+M_Radius = containers.Map(moons,radius);
+M_OrbRadius = containers.Map(moons,orbRadius);
+M_OrbTimes = containers.Map(moons,orbTime);
 clear masses radius orbRadius orbTime;
