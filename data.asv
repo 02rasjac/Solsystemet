@@ -11,6 +11,3 @@ orbTime = [27.3216, 0.3189, 7.1545, 15.945, 8.7062, 5.877, 6.3872]; %(dygn)
 Masses = containers.Map(moons,masses);
 Radius = containers.Map(moons,radius);
 OrbRadius = containers.Map(moons,orbRadius);
-OrbTimes = containers.Map(moons,orbTime);
-clear masses radius orbRadius orbTime;
-
