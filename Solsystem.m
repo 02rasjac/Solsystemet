@@ -8,6 +8,7 @@
     mt = Månarnas omloppstid
 %}
 function film = Solsystem(p, r, t, pr)
+    earthDay = 0;
     hold on
     for planet = p
         pName = planet{1};
@@ -15,8 +16,10 @@ function film = Solsystem(p, r, t, pr)
         [x, y] = GetCircle(dis, t(pName), [0, 0]);
         plot(x, y);
 
+        xOff = x(mod(earthDay, round(t(pName)))+1);
+        yOff = y(mod(earthDay, round(t(pName)))+1);
         pRadius = sqrt(pr(pName) / pi) * 15;
-        [px, py] = GetCircle(pRadius, 100, [x(1), y(1)]);
+        [px, py] = GetCircle(pRadius, 100, [xOff, yOff]);
         fill(px, py, "r");
     end
     hold off
