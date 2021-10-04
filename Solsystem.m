@@ -10,7 +10,7 @@ function film = Solsystem(p, r, t)
     hold on
     for planet = p
         pName = planet{1};
-        dis = r(pName);
+        dis = sqrt(r(pName));
         time = linspace(0, 2*pi, t(pName));
         x = dis * cos(time);
         y = dis * sin(time);
