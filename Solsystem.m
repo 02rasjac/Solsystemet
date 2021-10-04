@@ -8,21 +8,29 @@
     mt = Månarnas omloppstid
 %}
 function film = Solsystem(p, r, t, pr)
-    a = 0:0.1:2*pi;
     hold on
     for planet = p
         pName = planet{1};
         dis = sqrt(r(pName));
-        time = linspace(0, 2*pi, t(pName));
-        x = dis * cos(time);
-        y = dis * sin(time);
+        [x, y] = GetCircle(dis, t(pName), [0, 0]);
         plot(x, y);
 
         pRadius = sqrt(pr(pName) / pi) * 15;
-        px = pRadius * cos(a) + x(1);
-        py = pRadius * sin(a) + y(1);
+        [px, py] = GetCircle(pRadius, 100, [x(1), y(1)]);
         fill(px, py, "r");
     end
     hold off
     axis equal
+end
+
+%{
+    Returns x and y values to for a circle
+    radius = Radius, obviously
+    points = Number of points on circle. Higher => higher res.
+    offset = (x, y) coordinates for offset from origo
+%}
+function [x, y] = GetCircle(radius, points, offset)
+    period = linspace(0, 2*pi, points);
+    x = radius * cos(period) + offset(1);
+    y = radius * sin(period) + offset(2);
 end
