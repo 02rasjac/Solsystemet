@@ -9,21 +9,31 @@
 %}
 function film = Solsystem(p, r, t, pr)
     earthDay = 0;
-    hold on
-    for planet = p
-        pName = planet{1};
-        dis = sqrt(r(pName));
-        [x, y] = GetCircle(dis, t(pName), [0, 0]);
-        plot(x, y);
+    nDays = 365;
 
-        xOff = x(mod(earthDay, round(t(pName)))+1);
-        yOff = y(mod(earthDay, round(t(pName)))+1);
-        pRadius = sqrt(pr(pName) / pi) * 15;
-        [px, py] = GetCircle(pRadius, 100, [xOff, yOff]);
-        fill(px, py, "r");
+    fig = figure(1);
+    fig.Position(1:2) = [100, 100];
+    fig.Position(3:4) = [560*2, 420*2];
+    while earthDay <= nDays
+        clf;
+        hold on
+        for planet = p
+            pName = planet{1};
+            dis = sqrt(r(pName));
+            [x, y] = GetCircle(dis, t(pName), [0, 0]);
+            plot(x, y, "--");
+
+            xOff = x(mod(earthDay, floor(t(pName)))+1);
+            yOff = y(mod(earthDay, floor(t(pName)))+1);
+            pRadius = sqrt(pr(pName) / pi) * 15;
+            [px, py] = GetCircle(pRadius, 100, [xOff, yOff]);
+            fill(px, py, "r");
+        end
+        hold off
+        axis equal
+        earthDay = earthDay + 1;
+        film(earthDay) = getframe(gcf);
     end
-    hold off
-    axis equal
 end
 
 %{
