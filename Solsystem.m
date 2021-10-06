@@ -1,5 +1,3 @@
-% TODO: Only use 5 planets, the scale gets reallly hard to understand otherwise
-
 %{
     r  = The planets orbital radius
     t  = The planets orbital timeperiod
@@ -9,7 +7,7 @@
 %}
 function film = Solsystem(r, t, m, mr, mt)
     earthDay = 0;
-    nDays = 60;
+    nDays = 687;
     lims = [-max(r)-mr(end), max(r)+mr(end)];
 
     fig = figure(1);
@@ -23,6 +21,9 @@ function film = Solsystem(r, t, m, mr, mt)
         image(xlim, -ylim, I);
         hold on
         for idx = 1:length(r)
+            % Sun
+            DrawBody(4, 0, 0, "y");
+            
             % Planets orbit
             [x, y] = DrawOrbit(r(idx), t(idx), [0, 0]);
 
