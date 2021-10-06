@@ -10,12 +10,17 @@
 function film = Solsystem(r, t, m, mr, mt)
     earthDay = 0;
     nDays = 60;
+    lims = [-max(r)-mr(end), max(r)+mr(end)];
 
     fig = figure(1);
-    fig.Position(1:2) = [100, 100];
-    fig.Position(3:4) = [560*2, 420*2];
+    fig.Position(1:2) = [0, 0];
+    fig.Position(3:4) = [1280, 1024];
+    I = imread("background.jpg");
     while earthDay <= nDays
         clf;
+        xlim(lims);
+        ylim(lims);
+        image(xlim, -ylim, I);
         hold on
         for idx = 1:length(r)
             % Planets orbit
@@ -23,19 +28,17 @@ function film = Solsystem(r, t, m, mr, mt)
 
             % Planet itself
             [px, py] = PlanetCoord(earthDay, t(idx), x, y);
-            DrawBody(2, px, py);
+            DrawBody(2.5, px, py, "r");
 
             % Moon
             for moonIdx = find(m == idx)
                 [x, y] = DrawOrbit(mr(moonIdx), mt(moonIdx), [px, py]);
                 [mx, my] = PlanetCoord(earthDay, mt(moonIdx), x, y);
-                DrawBody(1, mx, my);
+                DrawBody(1.5, mx, my, "w");
             end
         end
         hold off
-        axis equal
-        xlim([-max(r)-mr(end), max(r)+mr(end)]);
-        ylim([-max(r)-mr(end), max(r)+mr(end)]);
+        axis square
         earthDay = earthDay + 1;
         film(earthDay) = getframe(gcf);
     end
@@ -48,16 +51,16 @@ end
 %}
 function [x, y] = DrawOrbit(radius, period, offset)
     [x, y] = GetCircle(radius, period, offset);
-    plot(x, y, "--", "LineWidth", 1);
+    plot(x, y, "k-", "LineWidth", 1);
 end
 
 %{
     radius = Radius, obviously
     x, y = The coordinates of the planet, positioned on their orbit
 %}
-function DrawBody(radius, x, y)
+function DrawBody(radius, x, y, color)
     [px, py] = GetCircle(radius, 100, [x, y]);
-    fill(px, py, "r");
+    fill(px, py, color);
 end
 
 %{
