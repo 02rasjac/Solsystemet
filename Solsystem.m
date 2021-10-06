@@ -1,17 +1,15 @@
+% TODO: Only use 5 planets, the scale gets reallly hard to understand otherwise
+
 %{
-    p  = Cell of planets names
     r  = The planets orbital radius
     t  = The planets orbital timeperiod
-    pr = The planets radius
-    pm = Mass of the planets
-    m  = The names of the moons
-    mp = The planets the moon orbits
+    m  = The names of the planets moons
     mr = The moons orbital radius
     mt = The moons orbital timeperiod
 %}
-function film = Solsystem(p, r, t, pr, m, mp, mr, mt)
+function film = Solsystem(r, t, m, mr, mt)
     earthDay = 0;
-    nDays = 365;
+    nDays = 60;
 
     fig = figure(1);
     fig.Position(1:2) = [100, 100];
@@ -19,19 +17,25 @@ function film = Solsystem(p, r, t, pr, m, mp, mr, mt)
     while earthDay <= nDays
         clf;
         hold on
-        for planet = p
-            pName = planet{1};
-            
+        for idx = 1:length(r)
             % Planets orbit
-            [x, y] = DrawOrbit(r(pName), t(pName));
+            [x, y] = DrawOrbit(r(idx), t(idx), [0, 0]);
 
             % Planet itself
-            [px, py] = PlanetCoord(earthDay, t(pName), x, y);
-            DrawBody(pr(pName), px, py);
+            [px, py] = PlanetCoord(earthDay, t(idx), x, y);
+            DrawBody(2, px, py);
 
+            % Moon
+            for moonIdx = find(m == idx)
+                [x, y] = DrawOrbit(mr(moonIdx), mt(moonIdx), [px, py]);
+                [mx, my] = PlanetCoord(earthDay, mt(moonIdx), x, y);
+                DrawBody(1, mx, my);
+            end
         end
         hold off
         axis equal
+        xlim([-max(r)-mr(end), max(r)+mr(end)]);
+        ylim([-max(r)-mr(end), max(r)+mr(end)]);
         earthDay = earthDay + 1;
         film(earthDay) = getframe(gcf);
     end
@@ -42,10 +46,9 @@ end
     radius = Radius, obviously
     period = number of days it takes for the planet
 %}
-function [x, y] = DrawOrbit(radius, period)
-    dis = sqrt(radius);
-    [x, y] = GetCircle(dis, period, [0, 0]);
-    plot(x, y, "--");
+function [x, y] = DrawOrbit(radius, period, offset)
+    [x, y] = GetCircle(radius, period, offset);
+    plot(x, y, "--", "LineWidth", 1);
 end
 
 %{
@@ -53,7 +56,6 @@ end
     x, y = The coordinates of the planet, positioned on their orbit
 %}
 function DrawBody(radius, x, y)
-    radius = sqrt(radius / pi) * 15;
     [px, py] = GetCircle(radius, 100, [x, y]);
     fill(px, py, "r");
 end
