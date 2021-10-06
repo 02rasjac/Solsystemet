@@ -34,7 +34,7 @@ function film = Solsystem(r, t, m, mr, mt)
             for moonIdx = find(m == idx)
                 [x, y] = DrawOrbit(mr(moonIdx), mt(moonIdx), [px, py]);
                 [mx, my] = PlanetCoord(earthDay, mt(moonIdx), x, y);
-                DrawBody(1.5, mx, my, "w");
+                DrawBody(1.5, mx, my, "c");
             end
         end
         hold off
