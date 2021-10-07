@@ -40,6 +40,8 @@ function film = Solsystem(r, t, m, mr, mt)
         end
         hold off
         axis square
+        set(gca,'xticklabel',[]);
+        set(gca,'yticklabel',[]);
         earthDay = earthDay + 1;
         film(earthDay) = getframe(gcf);
     end
